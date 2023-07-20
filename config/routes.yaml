@@ -11,5 +11,5 @@ contact_create:
     controller: App\Controller\ContactController::create
 
 contact_edit:
-    path: /contact/{id}/edit/
+    path: /contact/{firstName}/edit/
     controller: App\Controller\ContactController::edit

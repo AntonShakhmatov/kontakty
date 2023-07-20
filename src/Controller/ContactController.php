@@ -17,7 +17,7 @@ class ContactController extends AbstractController
     {
         $contactRepository = $doctrine->getRepository(Contact::class);
         $contacts = $contactRepository->findAll();
-    
+
         return $this->render('contact/index.html.twig', [
             'controller_name' => 'ContactController',
             'contacts' => $contacts,
@@ -30,30 +30,35 @@ class ContactController extends AbstractController
         // Создание формы
         $contact = new Contact();
         $form = $this->createForm(ContactFormType::class, $contact);
-    
+
         // Обработка отправки формы
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Получение менеджера сущностей
             $entityManager = $doctrine->getManager();
-    
+
             // Сохранение контакта в базу данных
             $entityManager->persist($contact);
             $entityManager->flush();
-    
+
             // Редирект на страницу с контактами
             // return $this->redirectToRoute('/contact');
         }
-    
+
         // Отображение формы
         return $this->render('contact/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/contact/{id}/edit', name: 'contact_edit')]
+    #[Route('/contact/{firstName}/edit', name: 'contact_edit')]
     public function edit(Contact $contact, Request $request): Response
     {
+        // Проверка наличия контакта с указанным ID
+        if (!$contact) {
+            throw $this->createNotFoundException('Контакт не найден');
+        }
+
         // Создание формы существующего контакта
         $form = $this->createForm(ContactFormType::class, $contact);
 
@@ -61,7 +66,12 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Сохранение изменений контакта в базу данных
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
             // Редирект на страницу с контактами
+            return $this->redirectToRoute('contact_index');
         }
 
         // Отображение формы
