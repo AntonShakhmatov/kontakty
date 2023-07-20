@@ -1,5 +1,15 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+    resource: '../src/Controller/'
+    type: annotation
+
+contact_index:
+    path: /contact
+    controller: App\Controller\ContactController::index
+
+contact_create:
+    path: /contact/create
+    controller: App\Controller\ContactController::create
+
+contact_edit:
+    path: /contact/{id}/edit
+    controller: App\Controller\ContactController::edit
