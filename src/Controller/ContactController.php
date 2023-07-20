@@ -15,10 +15,12 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $contact = $doctrine->getRepository(Contact::class);
-
+        $contactRepository = $doctrine->getRepository(Contact::class);
+        $contacts = $contactRepository->findAll();
+    
         return $this->render('contact/index.html.twig', [
             'controller_name' => 'ContactController',
+            'contacts' => $contacts,
         ]);
     }
 
