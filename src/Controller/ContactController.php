@@ -52,7 +52,7 @@ class ContactController extends AbstractController
     }
 
     #[Route('/contact/{firstName}/edit', name: 'contact_edit')]
-    public function edit(Contact $contact, Request $request): Response
+    public function edit(Contact $contact, Request $request, ManagerRegistry $doctrine): Response
     {
         // Проверка наличия контакта с указанным ID
         if (!$contact) {
@@ -66,7 +66,7 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Сохранение изменений контакта в базу данных
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();
 
