@@ -42,7 +42,7 @@ class ContactController extends AbstractController
             $entityManager->flush();
 
             // Редирект на страницу с контактами
-            // return $this->redirectToRoute('/contact');
+            return $this->redirectToRoute('contact_index');
         }
 
         // Отображение формы
@@ -51,7 +51,7 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('/contact/{firstName}/edit', name: 'contact_edit')]
+    #[Route('/contact/{lastName}/edit', name: 'contact_edit')]
     public function edit(Contact $contact, Request $request, ManagerRegistry $doctrine): Response
     {
         // Проверка наличия контакта с указанным ID
@@ -79,5 +79,24 @@ class ContactController extends AbstractController
             'form' => $form->createView(),
             'contact' => $contact,
         ]);
+    }
+
+    #[Route('/contact/{lastName}', name: 'contact_delete')]
+    public function delete(Contact $contact, ManagerRegistry $doctrine): Response
+    {
+        // Проверка наличия контакта с указанным ID
+        if (!$contact) {
+            throw $this->createNotFoundException('Контакт не найден');
+        }
+
+        // Получение менеджера сущностей
+        $entityManager = $doctrine->getManager();
+
+        // Удаление контакта из базы данных
+        $entityManager->remove($contact);
+        $entityManager->flush();
+
+        // Редирект на страницу с контактами
+        return $this->redirectToRoute('contact_index');
     }
 }
