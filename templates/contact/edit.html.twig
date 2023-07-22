@@ -6,6 +6,6 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <button type="submit">Сохранить</button>
-    <a href="{{ path('contact_delete', {'lastName': contact.lastName}) }}" class="delete-contact-button">Удалить контакт</a>
+    <a href="{{ path('contact_delete', {'firstName': contact.firstName}) }}" class="delete-contact-button">Удалить контакт</a>
     {{ form_end(form) }}
 {% endblock %}

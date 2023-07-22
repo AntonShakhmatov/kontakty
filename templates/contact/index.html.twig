@@ -15,10 +15,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for contact in contacts %}
+            {% for contact in pagination %}
                 <tr>
                     <td>{{ contact.id }}</td>
-                    <td>{{ contact.firstName }}</td>
+                    <td>
+                    <a href="{{ path('contact_edit', {'firstName': contact.firstName}) }}" class="edit-contact-button">{{ contact.firstName}}</a>
+                    </td>
                     <td>{{ contact.lastName }}</td>
                     <td>{{ contact.phoneNumber }}</td>
                     <td>{{ contact.email }}</td>
@@ -27,4 +29,14 @@
             {% endfor %}
         </tbody>
     </table>
+ <a href="{{ path('contact_create') }}">Create a New Contact</a>
+
+    {# <ul>
+        {% for item in pagination %}
+            <li>{{ item.firstName }} {{ item.lastName }}</li>
+        {% endfor %}
+    </ul> #}
+
+{{ knp_pagination_render(pagination) }}
+
 {% endblock %}

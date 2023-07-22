@@ -3,7 +3,7 @@ controllers:
     type: annotation
 
 contact_index:
-    path: /contact/
+    path: /
     controller: App\Controller\ContactController::index
 
 contact_create:
@@ -11,9 +11,9 @@ contact_create:
     controller: App\Controller\ContactController::create
 
 contact_edit:
-    path: /contact/{lastName}/edit/
+    path: /contact/edit/{firstName}
     controller: App\Controller\ContactController::edit
 
 contact_delete:
-    path: /contact/{lastName}/
+    path: /contact/delete/{firstName}/
     controller: App\Controller\ContactController::delete
