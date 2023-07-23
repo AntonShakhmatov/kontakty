@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Create a new entity</h1>
+    <h1>Create</h1>
 
     {{ form_start(form) }}
         {{ form_row(form.firstName) }}
@@ -9,7 +9,7 @@
         {{ form_row(form.phoneNumber) }}
         {{ form_row(form.email) }}
         {{ form_row(form.note) }}
-        <!-- Добавьте остальные поля вашей формы здесь -->
+        <!-- Other fields -->
         <button type="submit">Submit</button>
     {{ form_end(form) }}
 {% endblock %}

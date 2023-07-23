@@ -16,9 +16,6 @@ class ContactController extends AbstractController
     #[Route('/', name: 'app_contact')]
     public function index(PaginatorInterface $paginator, Request $request, ManagerRegistry $doctrine): Response
     {
-        $contactRepository = $doctrine->getRepository(Contact::class);
-        $contacts = $contactRepository->findAll();
-
         $em = $doctrine->getManager();
         $query = $em->getRepository(Contact::class)->createQueryBuilder('e')->getQuery();
         $pagination = $paginator->paginate(
@@ -29,7 +26,6 @@ class ContactController extends AbstractController
 
         return $this->render('contact/index.html.twig', [
             'controller_name' => 'ContactController',
-            'contacts' => $contacts,
             'pagination' => $pagination,
         ]);
     }
@@ -61,11 +57,11 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('/contact/edit/{firstName}', name: 'contact_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, string $firstName, ManagerRegistry $doctrine): Response
+    #[Route('/contact/edit/{lastName}', name: 'contact_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, string $lastName, ManagerRegistry $doctrine): Response
     {
         $contactRepository = $doctrine->getRepository(Contact::class);
-        $contact = $contactRepository->findOneBy(['firstName' => $firstName]);
+        $contact = $contactRepository->findOneBy(['lastName' => $lastName]);
     
         if (!$contact) {
             throw $this->createNotFoundException('Контакт не найден');
@@ -88,7 +84,7 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('/contact/delete/{firstName}', name: 'contact_delete')]
+    #[Route('/contact/delete/{lastName}', name: 'contact_delete')]
     public function delete(Contact $contact, ManagerRegistry $doctrine): Response
     {
         // Проверка наличия контакта с указанным ID

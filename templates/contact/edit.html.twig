@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Редактирование контакта</h1>
+    <h1>Edit</h1>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button type="submit">Сохранить</button>
-    <a href="{{ path('contact_delete', {'firstName': contact.firstName}) }}" class="delete-contact-button">Удалить контакт</a>
+    <button type="submit">Save</button>
+    <a href="{{ path('contact_delete', {'lastName': contact.lastName}) }}" class="delete-contact-button">Delete</a>
     {{ form_end(form) }}
 {% endblock %}

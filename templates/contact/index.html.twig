@@ -6,7 +6,6 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Phone Number</th>
@@ -17,25 +16,22 @@
         <tbody>
             {% for contact in pagination %}
                 <tr>
-                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.firstName }}</td>
                     <td>
-                    <a href="{{ path('contact_edit', {'firstName': contact.firstName}) }}" class="edit-contact-button">{{ contact.firstName}}</a>
+                    <a href="{{ path('contact_edit', {'lastName': contact.lastName}) }}" class="edit-contact-button">{{ contact.lastName }}</a>
                     </td>
-                    <td>{{ contact.lastName }}</td>
                     <td>{{ contact.phoneNumber }}</td>
                     <td>{{ contact.email }}</td>
-                    <td>{{ contact.note }}</td>
+                    {# <td><span class="note">{{ contact.note }}</span></td> #}
+                    <td><button onclick="showModal('{{ contact.note }}')">Show the note</button></td>
                 </tr>
+                <div class="modal">
+                <div class="modal-content"></div>
+                </div>
             {% endfor %}
         </tbody>
     </table>
  <a href="{{ path('contact_create') }}">Create a New Contact</a>
-
-    {# <ul>
-        {% for item in pagination %}
-            <li>{{ item.firstName }} {{ item.lastName }}</li>
-        {% endfor %}
-    </ul> #}
 
 {{ knp_pagination_render(pagination) }}
 
